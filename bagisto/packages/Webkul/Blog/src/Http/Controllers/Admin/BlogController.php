@@ -39,6 +39,24 @@ class BlogController extends Controller
     public function store()
     {
         //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB
+            'status' => 'boolean',
+        ]);
+
+        $postData = $validated;
+        $postData['user_id'] = auth()->id();
+
+        if ($request->hasFile('image')) {
+            $postData['image'] = $request->file('image')->store('posts', 'public');
+        }
+
+        $this->postRepository->create($postData);
+
+        session()->flash('success', trans('blog::app.admin.posts.created'));
+        return redirect()->route('admin.blog.index');
     }
 
     /**
@@ -48,7 +66,8 @@ class BlogController extends Controller
      */
     public function edit(int $id)
     {
-        return view('blog::admin.edit');
+        $post = $this->postRepository->find($id);
+        return view('blog::admin.edit' ,compact('post'));
     }
 
     /**
@@ -59,6 +78,26 @@ class BlogController extends Controller
     public function update(int $id)
     {
         //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'boolean',
+        ]);
+
+        $postData = $validated;
+
+        if ($request->hasFile('image')) {
+            $post = $this->postRepository->find($id);
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
+            }
+            $postData['image'] = $request->file('image')->store('posts', 'public');
+        }
+
+        $this->postRepository->update($postData, $id);
+
+        return redirect()->route('admin.blog.index')->with('success', trans('blog::app.admin.posts.updated'));
     }
 
     /**
@@ -68,6 +107,15 @@ class BlogController extends Controller
      */
     public function destroy(int $id)
     {
-        
+        $post = $this->postRepository->find($id);
+
+        if ($post->image) {
+            Storage::disk('public')->delete($post->image);
+        }
+
+        $this->postRepository->delete($id);
+
+        session()->flash('success', trans('blog::app.admin.posts.deleted'));
+        return redirect()->route('admin.blog.index');
     }
 }
