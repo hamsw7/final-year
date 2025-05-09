@@ -111,7 +111,7 @@
     <script type="module">
         app.component('v-checkout-login', {
             template: '#v-checkout-login-template',
-            
+
             data() {
                 return {
                     isStoring: false,

@@ -37,7 +37,7 @@
                 </button>
             </div>
         </div>
-        
+
         <!-- Create Attributes Vue Components -->
         <v-create-attributes>
             <!-- Shimmer Effect -->
@@ -77,7 +77,7 @@
                             <x-admin::form.control-group.control
                                 type="text"
                                 name="admin_name"
-                                rules="required"
+                                rules="required |alpha"
                                 :value="old('admin_name')"
                                 :label="trans('admin::app.catalog.attributes.create.admin')"
                                 :placeholder="trans('admin::app.catalog.attributes.create.admin')"
@@ -449,7 +449,7 @@
                             </x-admin::form.control-group>
                         </x-slot>
                     </x-admin::accordion>
-                    
+
                     <!-- Validations -->
                     <x-admin::accordion>
                         <x-slot:header>

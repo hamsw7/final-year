@@ -44,4 +44,6 @@ return [
     Webkul\Theme\Providers\ThemeServiceProvider::class,
     Webkul\User\Providers\UserServiceProvider::class,
     Webkul\Blog\Providers\BlogServiceProvider::class,
+    Webkul\Member\Providers\MemberServiceProvider::class,
+    // Webkul\Chapa\Providers\ChapaServiceProvider::class,
 ];

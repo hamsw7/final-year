@@ -66,7 +66,7 @@
                             type="text"
                             class="px-6 py-4 max-md:py-3 max-sm:py-2"
                             name="first_name"
-                            rules="required"
+                            rules="required|alpha"
                             :value="old('first_name')"
                             :label="trans('shop::app.customers.signup-form.first-name')"
                             :placeholder="trans('shop::app.customers.signup-form.first-name')"
@@ -89,7 +89,7 @@
                             type="text"
                             class="px-6 py-4 max-md:py-3 max-sm:py-2"
                             name="last_name"
-                            rules="required"
+                            rules="required|alpha"
                             :value="old('last_name')"
                             :label="trans('shop::app.customers.signup-form.last-name')"
                             :placeholder="trans('shop::app.customers.signup-form.last-name')"
@@ -178,7 +178,7 @@
                         </div>
                     @endif
 
-                    <!-- Subscribed Button -->
+                    <!-- Subscribed Button
                     @if (core()->getConfigData('customer.settings.create_new_account_options.news_letter'))
                         <div class="mb-5 flex select-none items-center gap-1.5">
                             <input
@@ -201,7 +201,7 @@
                             </label>
                         </div>
                     @endif
-
+-->
                     {!! view_render_event('bagisto.shop.customers.signup_form.newsletter_subscription.after') !!}
 
                     @if(

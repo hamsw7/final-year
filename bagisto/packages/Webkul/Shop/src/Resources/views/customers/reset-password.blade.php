@@ -23,7 +23,7 @@
 
     <div class="container mt-20 max-1180:px-5 max-md:mt-12">
         {!! view_render_event('bagisto.shop.customers.reset_password.logo.before') !!}
-        
+
         <!-- Company Logo -->
         <div class="flex items-center gap-x-14 max-[1180px]:gap-x-9">
             <a
@@ -72,7 +72,7 @@
                             class="px-6 py-4 max-md:py-3 max-sm:py-1.5"
                             id="email"
                             name="email"
-                            rules="required|email"
+                             rules="required|email:rfc|max:254|unique:users,email|App\Rules\EmailStartsWithLowercase"
                             :value="old('email')"
                             :label="trans('shop::app.customers.reset-password.email')"
                             placeholder="email@example.com"

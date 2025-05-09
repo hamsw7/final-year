@@ -24,7 +24,7 @@
         "diglactic/laravel-breadcrumbs": "^9.0",
         "elasticsearch/elasticsearch": "^8.10",
         "enshrined/svg-sanitize": "^0.16.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^7.9",
         "intervention/image": "^2.4",
         "kalnoy/nestedset": "^6.0",
         "khaled.alshamaa/ar-php": "^6.0.0",
@@ -45,7 +45,9 @@
         "pusher/pusher-php-server": "^7.0",
         "shetabit/visitor": "^4.1",
         "spatie/laravel-responsecache": "^7.4",
-        "spatie/laravel-sitemap": "^7.3"
+        "spatie/laravel-sitemap": "^7.3",
+        "srmklive/paypal": "^3.0",
+        "twilio/sdk": "^8.6"
     },
     "require-dev": {
         "bagisto/laravel-datafaker": "2.2.*",
@@ -95,7 +97,9 @@
             "Webkul\\SocialShare\\": "packages/Webkul/SocialShare/src",
             "Webkul\\Tax\\": "packages/Webkul/Tax/src",
             "Webkul\\Theme\\": "packages/Webkul/Theme/src",
-            "Webkul\\User\\": "packages/Webkul/User/src"
+            "Webkul\\User\\": "packages/Webkul/User/src",
+            "Webkul\\Chapa\\": "packages/Webkul/Chapa/src",
+            "Webkul\\Member\\": "packages/Webkul/Member/src"
         }
     },
     "autoload-dev": {
@@ -127,10 +131,6 @@
         }
     },
     "repositories": {
-        "bagisto-blog": {
-            "type": "vcs",
-            "url": "https://github.com/ARACOOOL/bagisto-blog"
-        },
         "0": {
             "type": "path",
             "url": "packages/*/*",

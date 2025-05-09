@@ -50,7 +50,7 @@
                             type="email"
                             class="px-6 py-5 max-md:py-3 max-sm:py-3.5"
                             name="email"
-                            rules="required|email"
+                             rules="required|email:rfc|unique:users,email|App\Rules\EmailStartsWithLowercase"
                             :value="old('email')"
                             :label="trans('shop::app.home.contact.email')"
                             :placeholder="trans('shop::app.home.contact.email')"

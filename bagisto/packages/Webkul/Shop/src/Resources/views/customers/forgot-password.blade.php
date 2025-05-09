@@ -64,7 +64,7 @@
                             type="email"
                             class="px-6 py-4 max-sm:py-1.5"
                             name="email"
-                            rules="required|email"
+                             rules="required|email:rfc|max:254|unique:users,email|App\Rules\EmailStartsWithLowercase"
                             value=""
                             :label="trans('shop::app.customers.login-form.email')"
                             placeholder="email@example.com"

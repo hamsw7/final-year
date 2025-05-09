@@ -2,7 +2,7 @@
     <!-- Page Title -->
     <x-slot:title>
         @lang('shop::app.customers.account.addresses.edit.edit')
-        @lang('shop::app.customers.account.addresses.edit.title') 
+        @lang('shop::app.customers.account.addresses.edit.title')
     </x-slot>
 
     <!-- Breadcrumbs -->
@@ -126,7 +126,7 @@
                     <x-shop::form.control-group.control
                         type="text"
                         name="email"
-                        rules="required|email"
+                         rules="required|email:rfc|max:254|unique:users,email|App\Rules\EmailStartsWithLowercase"
                         :value="old('email') ?? $address->email"
                         :label="trans('Email')"
                         :placeholder="trans('Email')"
@@ -216,8 +216,8 @@
                         :label="trans('shop::app.customers.account.addresses.edit.country')"
                     >
                         @foreach (core()->countries() as $country)
-                            <option 
-                                {{ $country->code === config('app.default_country') ? 'selected' : '' }}  
+                            <option
+                                {{ $country->code === config('app.default_country') ? 'selected' : '' }}
                                 value="{{ $country->code }}"
                             >
                                 {{ $country->name }}
@@ -245,7 +245,7 @@
                             :label="trans('shop::app.customers.account.addresses.edit.state')"
                             :placeholder="trans('shop::app.customers.account.addresses.edit.state')"
                         >
-                            <option 
+                            <option
                                 v-for='(state, index) in countryStates[addressData.country]'
                                 :value="state.code"
                             >
@@ -333,7 +333,7 @@
                 >
                     @lang('shop::app.customers.account.addresses.edit.update-btn')
                 </button>
-                
+
                 {!! view_render_event('bagisto.shop.customers.account.address.edit_form_controls.after', ['address' => $address]) !!}
 
             </x-shop::form>
@@ -354,7 +354,7 @@
                         countryStates: @json(core()->groupedStatesByCountries()),
                     };
                 },
-    
+
                 methods: {
                     haveStates() {
                         return !!this.countryStates[this.addressData.country]?.length;

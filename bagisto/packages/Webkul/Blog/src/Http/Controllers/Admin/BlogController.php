@@ -6,6 +6,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Webkul\Blog\Models\Post;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -17,9 +20,11 @@ class BlogController extends Controller
      * @return \Illuminate\View\View
      */
     public function index()
-    {
-        return view('blog::admin.index');
-    }
+        {
+            $posts = Post::orderBy('created_at', 'desc')->get();
+            $posts = Post::where('user_id', auth('admin')->id())->get();
+            return view('blog::admin.index', compact('posts'));
+        }
 
     /**
      * Show the form for creating a new resource.
@@ -31,12 +36,14 @@ class BlogController extends Controller
         return view('blog::admin.create');
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
         //
         $validated = $request->validate([
@@ -47,15 +54,15 @@ class BlogController extends Controller
         ]);
 
         $postData = $validated;
-        $postData['user_id'] = auth()->id();
+        $postData['user_id'] = auth('admin')->id(); // Use the appropriate guard
 
         if ($request->hasFile('image')) {
             $postData['image'] = $request->file('image')->store('posts', 'public');
         }
 
-        $this->postRepository->create($postData);
+        Post::create($postData);
 
-        session()->flash('success', trans('blog::app.admin.posts.created'));
+        session()->flash('success', 'Post created successfully.');
         return redirect()->route('admin.blog.index');
     }
 
@@ -66,7 +73,7 @@ class BlogController extends Controller
      */
     public function edit(int $id)
     {
-        $post = $this->postRepository->find($id);
+        $post = Post::find($id);
         return view('blog::admin.edit' ,compact('post'));
     }
 
@@ -75,9 +82,8 @@ class BlogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(int $id)
+    public function update(Request $request, int $id)
     {
-        //
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -88,16 +94,19 @@ class BlogController extends Controller
         $postData = $validated;
 
         if ($request->hasFile('image')) {
-            $post = $this->postRepository->find($id);
+            $post = Post::find($id);
             if ($post->image) {
-                Storage::disk('public')->delete($post->image);
+                if ($post->image && Storage::disk('public')->exists($post->image)) {
+                    Storage::disk('public')->delete($post->image);
+                }
+                $postData['image'] = $request->file('image')->store('posts', 'public');
             }
             $postData['image'] = $request->file('image')->store('posts', 'public');
         }
 
-        $this->postRepository->update($postData, $id);
+        Post::find($id)->update($postData);
 
-        return redirect()->route('admin.blog.index')->with('success', trans('blog::app.admin.posts.updated'));
+        return redirect()->route('admin.blog.index')->with('success', 'posts is updated');
     }
 
     /**
@@ -107,15 +116,15 @@ class BlogController extends Controller
      */
     public function destroy(int $id)
     {
-        $post = $this->postRepository->find($id);
+        $post = Post::find($id);
 
         if ($post->image) {
             Storage::disk('public')->delete($post->image);
         }
 
-        $this->postRepository->delete($id);
+        Post::find($id)->delete();
 
-        session()->flash('success', trans('blog::app.admin.posts.deleted'));
+        session()->flash('success', 'Posts deleted successfully');
         return redirect()->route('admin.blog.index');
     }
 }

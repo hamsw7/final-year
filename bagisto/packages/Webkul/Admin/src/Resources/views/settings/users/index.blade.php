@@ -231,7 +231,7 @@
                                     type="text"
                                     id="name"
                                     name="name"
-                                    rules="required"
+                                    rules="required|alpha"
                                     v-model="data.user.name"
                                     :label="trans('admin::app.settings.users.index.create.name')"
                                     :placeholder="trans('admin::app.settings.users.index.create.name')"

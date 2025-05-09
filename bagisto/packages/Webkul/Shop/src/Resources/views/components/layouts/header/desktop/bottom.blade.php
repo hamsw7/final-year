@@ -5,47 +5,107 @@
         This section will provide categories for the first, second, and third levels. If
         additional levels are required, users can customize them according to their needs.
     -->
-    <!-- Left Nagivation Section -->
-    <div class="flex items-center gap-x-10 max-[1180px]:gap-x-5">
-        {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.before') !!}
+<!-- Left Navigation Section -->
+<div class="flex items-center gap-x-10 max-[1180px]:gap-x-5">
+    {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.before') !!}
 
-        <a
-            href="{{ route('shop.home.index') }}"
-            aria-label="@lang('shop::app.components.layouts.header.bagisto')"
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <a
+        href="{{ route('shop.home.index') }}"
+        aria-label="@lang('shop::app.components.layouts.header.bagisto')"
+    >
+        <img
+            src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
+            width="131"
+            height="29"
+            alt="{{ config('app.name') }}"
         >
-            <img
-                src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                width="131"
-                height="29"
-                alt="{{ config('app.name') }}"
-            >
-        </a>
+    </a>
 
-        {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.after') !!}
+    <a
+        href="{{ route('weather.index') }}"
+        class="weather-checker-link relative flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 group"
+        style="margin-left: 20px;"
+    >
+        <div class="flex items-center gap-1.5 relative z-10">
+            <!-- Sunny Icon -->
+            <i class="fas fa-sun text-yellow-500 text-xl transition-all group-hover:rotate-12 group-hover:scale-110 dark:text-yellow-300"></i>
 
-        {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.category.before') !!}
+            <!-- Slash Separator -->
+            <span class="text-gray-600 dark:text-gray-300 mx-1 font-bold">/</span>
 
-        <v-desktop-category>
-            <div class="flex items-center gap-5">
-                <span
-                    class="shimmer h-6 w-20 rounded"
-                    role="presentation"
-                ></span>
+            <!-- Rain Cloud Icon -->
+            <i class="fas fa-cloud-rain text-blue-500 text-xl transition-all group-hover:-rotate-12 group-hover:scale-110 dark:text-blue-300"></i>
+        </div>
 
-                <span
-                    class="shimmer h-6 w-20 rounded"
-                    role="presentation"
-                ></span>
+        <!-- Text -->
+        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 ml-1">
+            Weather
+        </span>
+    </a>
 
-                <span
-                    class="shimmer h-6 w-20 rounded"
-                    role="presentation"
-                ></span>
-            </div>
-        </v-desktop-category>
+    {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.after') !!}
 
-        {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.category.after') !!}
-    </div>
+    {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.category.before') !!}
+
+    <v-desktop-category>
+        <div class="flex items-center gap-5">
+            <span
+                class="shimmer h-6 w-20 rounded"
+                role="presentation"
+            ></span>
+
+            <span
+                class="shimmer h-6 w-20 rounded"
+                role="presentation"
+            ></span>
+
+            <span
+                class="shimmer h-6 w-20 rounded"
+                role="presentation"
+            ></span>
+        </div>
+    </v-desktop-category>
+
+    {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.category.after') !!}
+</div>
+
+<style>
+    .weather-checker-link {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(156, 163, 175, 0.2);
+        backdrop-filter: blur(4px);
+    }
+
+    .weather-checker-link:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+    }
+
+    .dark .weather-checker-link {
+        background: rgba(31, 41, 55, 0.9);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .fa-sun, .fa-cloud-rain {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .weather-checker-link {
+            margin-left: 10px;
+            padding: 0.5rem;
+        }
+        .weather-checker-link i {
+            font-size: 1.3rem;
+        }
+        .weather-checker-link span.text-sm {
+            display: none;
+        }
+    }
+</style>
 
     <!-- Right Nagivation Section -->
     <div class="flex items-center gap-x-9 max-[1100px]:gap-x-6 max-lg:gap-x-8">
@@ -105,13 +165,10 @@
             <!-- Compare -->
             @if(core()->getConfigData('catalog.products.settings.compare_option'))
                 <a
-                    href="{{ route('shop.compare.index') }}"
+                    href="{{ route('shop.blog.index') }}"
                     aria-label="@lang('shop::app.components.layouts.header.compare')"
                 >
-                    <span
-                        class="icon-compare inline-block cursor-pointer text-2xl"
-                        role="presentation"
-                    ></span>
+                    Blog
                 </a>
             @endif
 
@@ -155,7 +212,7 @@
                         <p class="mt-3 w-full border border-zinc-200"></p>
 
                         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.customers_action.before') !!}
-                        
+
                         <div class="mt-6 flex gap-4">
                             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.sign_in_button.before') !!}
 
@@ -172,7 +229,7 @@
                             >
                                 @lang('shop::app.components.layouts.header.sign-up')
                             </a>
-                            
+
                             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.sign_up_button.after') !!}
                         </div>
 

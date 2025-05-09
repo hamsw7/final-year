@@ -53,5 +53,6 @@ class BlogServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/acl.php', 'acl'
         );
+
     }
 }

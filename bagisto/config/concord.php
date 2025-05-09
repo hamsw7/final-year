@@ -43,6 +43,7 @@ return [
         \Webkul\Theme\Providers\ModuleServiceProvider::class,
         \Webkul\User\Providers\ModuleServiceProvider::class,
         \Webkul\Blog\Providers\ModuleServiceProvider::class,
+        \Webkul\Blog\Providers\ModuleServiceProvider::class,
     ],
 
 ];
